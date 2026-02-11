@@ -31,35 +31,61 @@ function Teams() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading teams...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">
-      <h2>Teams</h2>
+      <h2>🤝 Teams</h2>
+      <p className="text-muted mb-4">Total teams: <span className="badge bg-primary">{teams.length}</span></p>
       <div className="row">
         {teams.length > 0 ? (
           teams.map((team) => (
             <div key={team.id} className="col-md-4 mb-4">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{team.name || 'Unnamed Team'}</h5>
-                  <p className="card-text">{team.description || 'No description available'}</p>
-                  <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                      <strong>Members:</strong> {team.member_count || 0}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Created:</strong> {team.created_at ? new Date(team.created_at).toLocaleDateString() : 'N/A'}
-                    </li>
-                  </ul>
+                  <h5 className="card-title">🏆 {team.name || 'Unnamed Team'}</h5>
+                  <p className="card-text text-muted">{team.description || 'No description available'}</p>
+                </div>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">
+                    <strong>Members:</strong> <span className="badge bg-success ms-2">{team.member_count || 0}</span>
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Created:</strong> {team.created_at ? new Date(team.created_at).toLocaleDateString() : 'N/A'}
+                  </li>
+                </ul>
+                <div className="card-body">
+                  <button className="btn btn-primary btn-sm w-100">View Team</button>
                 </div>
               </div>
             </div>
           ))
         ) : (
           <div className="col-12">
-            <p className="text-center">No teams found</p>
+            <div className="alert alert-info text-center" role="alert">
+              No teams found. Create your first team!
+            </div>
           </div>
         )}
       </div>

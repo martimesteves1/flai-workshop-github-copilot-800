@@ -31,41 +31,89 @@ function Workouts() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading workouts...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const getDifficultyBadge = (difficulty) => {
+    const badges = {
+      'Beginner': 'bg-success',
+      'Intermediate': 'bg-warning text-dark',
+      'Advanced': 'bg-danger'
+    };
+    return badges[difficulty] || 'bg-secondary';
+  };
+
+  const getWorkoutIcon = (type) => {
+    const icons = {
+      'Cardio': '❤️',
+      'Strength': '💪',
+      'Flexibility': '🧘',
+      'HIIT': '⚡',
+      'Yoga': '🕉️'
+    };
+    return icons[type] || '🏋️';
+  };
 
   return (
     <div className="container mt-5">
-      <h2>Workout Suggestions</h2>
+      <h2>💡 Workout Suggestions</h2>
+      <p className="text-muted mb-4">Personalized workout recommendations: <span className="badge bg-primary">{workouts.length}</span></p>
       <div className="row">
         {workouts.length > 0 ? (
           workouts.map((workout) => (
             <div key={workout.id} className="col-md-6 mb-4">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{workout.name || 'Unnamed Workout'}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    {workout.workout_type || 'General'}
+                  <h5 className="card-title">
+                    {getWorkoutIcon(workout.workout_type)} {workout.name || 'Unnamed Workout'}
+                  </h5>
+                  <h6 className="card-subtitle mb-3">
+                    <span className={`badge ${getDifficultyBadge(workout.difficulty_level)}`}>
+                      {workout.difficulty_level || 'General'}
+                    </span>
+                    <span className="badge bg-info ms-2">{workout.workout_type || 'General'}</span>
                   </h6>
                   <p className="card-text">{workout.description || 'No description available'}</p>
-                  <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                      <strong>Duration:</strong> {workout.duration || 0} minutes
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Difficulty:</strong> {workout.difficulty_level || 'N/A'}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Calories:</strong> {workout.estimated_calories || 0}
-                    </li>
-                  </ul>
+                </div>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">
+                    <strong>⏱️ Duration:</strong> <span className="badge bg-primary ms-2">{workout.duration || 0} minutes</span>
+                  </li>
+                  <li className="list-group-item">
+                    <strong>🔥 Calories:</strong> <span className="badge bg-warning text-dark ms-2">{workout.estimated_calories || 0} cal</span>
+                  </li>
+                </ul>
+                <div className="card-body">
+                  <button className="btn btn-primary btn-sm w-100">Start Workout</button>
                 </div>
               </div>
             </div>
           ))
         ) : (
           <div className="col-12">
-            <p className="text-center">No workout suggestions found</p>
+            <div className="alert alert-info text-center" role="alert">
+              No workout suggestions available. Complete more activities to get personalized recommendations!
+            </div>
           </div>
         )}
       </div>

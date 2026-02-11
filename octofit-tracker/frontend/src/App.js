@@ -14,7 +14,8 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              <strong>🏃 OctoFit Tracker</strong>
+              <img src="/octofitapp-small.png" alt="OctoFit Logo" />
+              <strong>OctoFit Tracker</strong>
             </Link>
             <button
               className="navbar-toggler"
@@ -63,14 +64,48 @@ function App() {
           <Route path="/" element={
             <div className="container mt-5">
               <div className="jumbotron text-center">
-                <h1 className="display-4">Welcome to OctoFit Tracker!</h1>
+                <h1 className="display-4">Welcome to OctoFit Tracker! 🏋️</h1>
                 <p className="lead">
                   Track your fitness journey, compete with your team, and achieve your goals.
                 </p>
                 <hr className="my-4" />
-                <p>
+                <p className="mb-4">
                   Get started by exploring the navigation menu above to view users, activities, teams, leaderboard, and personalized workout suggestions.
                 </p>
+                <div className="row mt-4">
+                  <div className="col-md-3 mb-3">
+                    <div className="card text-center">
+                      <div className="card-body">
+                        <h5 className="card-title">👥 Users</h5>
+                        <p className="card-text">View all registered users</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <div className="card text-center">
+                      <div className="card-body">
+                        <h5 className="card-title">🏃 Activities</h5>
+                        <p className="card-text">Track fitness activities</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <div className="card text-center">
+                      <div className="card-body">
+                        <h5 className="card-title">🤝 Teams</h5>
+                        <p className="card-text">Join and manage teams</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <div className="card text-center">
+                      <div className="card-body">
+                        <h5 className="card-title">🏆 Leaderboard</h5>
+                        <p className="card-text">See top performers</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           } />

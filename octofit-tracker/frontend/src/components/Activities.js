@@ -31,21 +31,54 @@ function Activities() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading activities...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const getActivityIcon = (type) => {
+    const icons = {
+      'Running': '🏃',
+      'Cycling': '🚴',
+      'Swimming': '🏊',
+      'Walking': '🚶',
+      'Yoga': '🧘',
+      'Gym': '🏋️'
+    };
+    return icons[type] || '💪';
+  };
 
   return (
     <div className="container mt-5">
-      <h2>Activities</h2>
+      <h2>🏃 Activities</h2>
+      <p className="text-muted mb-4">Total activities: <span className="badge bg-primary">{activities.length}</span></p>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-hover table-bordered">
           <thead>
             <tr>
               <th>User</th>
               <th>Activity Type</th>
               <th>Duration (min)</th>
               <th>Distance (km)</th>
-              <th>Calories</th>
+              <th>Calories Burned</th>
               <th>Date</th>
             </tr>
           </thead>
@@ -53,17 +86,19 @@ function Activities() {
             {activities.length > 0 ? (
               activities.map((activity) => (
                 <tr key={activity.id}>
-                  <td>{activity.user_name || activity.user || 'N/A'}</td>
-                  <td>{activity.activity_type || 'N/A'}</td>
-                  <td>{activity.duration || 0}</td>
-                  <td>{activity.distance || 0}</td>
-                  <td>{activity.calories_burned || 0}</td>
+                  <td><strong>{activity.user_name || activity.user || 'N/A'}</strong></td>
+                  <td>
+                    {getActivityIcon(activity.activity_type)} {activity.activity_type || 'N/A'}
+                  </td>
+                  <td><span className="badge bg-info">{activity.duration || 0} min</span></td>
+                  <td><span className="badge bg-primary">{activity.distance || 0} km</span></td>
+                  <td><span className="badge bg-warning text-dark">{activity.calories_burned || 0} cal</span></td>
                   <td>{activity.date ? new Date(activity.date).toLocaleDateString() : 'N/A'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="text-center">No activities found</td>
+                <td colSpan="6" className="text-center text-muted">No activities found</td>
               </tr>
             )}
           </tbody>

@@ -31,14 +31,35 @@ function Users() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-5"><p>Loading users...</p></div>;
-  if (error) return <div className="container mt-5"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">
-      <h2>Users</h2>
+      <h2>👥 Users</h2>
+      <p className="text-muted mb-4">Total users: <span className="badge bg-primary">{users.length}</span></p>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-hover table-bordered">
           <thead>
             <tr>
               <th>Username</th>
@@ -53,17 +74,23 @@ function Users() {
             {users.length > 0 ? (
               users.map((user) => (
                 <tr key={user.id}>
-                  <td>{user.username || 'N/A'}</td>
+                  <td><strong>{user.username || 'N/A'}</strong></td>
                   <td>{user.email || 'N/A'}</td>
                   <td>{user.first_name || 'N/A'}</td>
                   <td>{user.last_name || 'N/A'}</td>
-                  <td>{user.team_name || user.team || 'No Team'}</td>
+                  <td>
+                    {user.team_name || user.team ? (
+                      <span className="badge bg-success">{user.team_name || user.team}</span>
+                    ) : (
+                      <span className="badge bg-secondary">No Team</span>
+                    )}
+                  </td>
                   <td>{user.date_joined ? new Date(user.date_joined).toLocaleDateString() : 'N/A'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="text-center">No users found</td>
+                <td colSpan="6" className="text-center text-muted">No users found</td>
               </tr>
             )}
           </tbody>
