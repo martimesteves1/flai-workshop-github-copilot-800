@@ -1,0 +1,63 @@
+from rest_framework import serializers
+from .models import User, Team, Activity, Leaderboard, Workout
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['_id', 'name', 'email', 'password', 'team_id', 'created_at']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('_id'):
+            representation['_id'] = str(representation['_id'])
+        return representation
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['_id', 'name', 'description', 'created_at']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('_id'):
+            representation['_id'] = str(representation['_id'])
+        return representation
+
+
+class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+        fields = ['_id', 'user_id', 'activity_type', 'duration', 'calories', 'distance', 'date', 'notes']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('_id'):
+            representation['_id'] = str(representation['_id'])
+        return representation
+
+
+class LeaderboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Leaderboard
+        fields = ['_id', 'user_id', 'user_name', 'team_id', 'team_name', 'total_calories', 'total_activities', 'total_distance', 'rank']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('_id'):
+            representation['_id'] = str(representation['_id'])
+        return representation
+
+
+class WorkoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workout
+        fields = ['_id', 'name', 'description', 'activity_type', 'difficulty', 'duration', 'calories', 'instructions']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('_id'):
+            representation['_id'] = str(representation['_id'])
+        return representation
