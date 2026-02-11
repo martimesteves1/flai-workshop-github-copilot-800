@@ -5,21 +5,21 @@ from .models import User, Team, Activity, Leaderboard, Workout
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """Admin configuration for the User model"""
-    list_display = ['name', 'email', 'team_id', 'created_at']
-    list_filter = ['created_at', 'team_id']
-    search_fields = ['name', 'email']
-    readonly_fields = ['_id', 'created_at']
-    ordering = ['-created_at']
+    list_display = ['username', 'email', 'first_name', 'last_name', 'team_id', 'date_joined']
+    list_filter = ['date_joined', 'team_id']
+    search_fields = ['username', 'email', 'first_name', 'last_name']
+    readonly_fields = ['_id', 'date_joined']
+    ordering = ['-date_joined']
 
     fieldsets = (
         ('User Information', {
-            'fields': ('_id', 'name', 'email', 'password')
+            'fields': ('_id', 'username', 'email', 'first_name', 'last_name', 'password')
         }),
         ('Team Assignment', {
             'fields': ('team_id',)
         }),
         ('Timestamps', {
-            'fields': ('created_at',)
+            'fields': ('date_joined',)
         }),
     )
 

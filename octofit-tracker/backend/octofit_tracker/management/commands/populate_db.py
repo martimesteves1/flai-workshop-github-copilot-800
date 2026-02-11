@@ -36,35 +36,45 @@ class Command(BaseCommand):
         # Create Users - Marvel Heroes
         self.stdout.write('Creating Marvel heroes...')
         iron_man = User.objects.create(
-            name='Tony Stark',
+            username='ironman',
+            first_name='Tony',
+            last_name='Stark',
             email='ironman@marvel.com',
             password='arc_reactor_3000',
             team_id=str(team_marvel._id)
         )
         
         captain_america = User.objects.create(
-            name='Steve Rogers',
+            username='capamerica',
+            first_name='Steve',
+            last_name='Rogers',
             email='capamerica@marvel.com',
             password='vibranium_shield',
             team_id=str(team_marvel._id)
         )
         
         black_widow = User.objects.create(
-            name='Natasha Romanoff',
+            username='blackwidow',
+            first_name='Natasha',
+            last_name='Romanoff',
             email='blackwidow@marvel.com',
             password='red_room_trained',
             team_id=str(team_marvel._id)
         )
         
         thor = User.objects.create(
-            name='Thor Odinson',
+            username='thor',
+            first_name='Thor',
+            last_name='Odinson',
             email='thor@marvel.com',
             password='mjolnir_worthy',
             team_id=str(team_marvel._id)
         )
         
         hulk = User.objects.create(
-            name='Bruce Banner',
+            username='hulk',
+            first_name='Bruce',
+            last_name='Banner',
             email='hulk@marvel.com',
             password='gamma_radiation',
             team_id=str(team_marvel._id)
@@ -73,35 +83,45 @@ class Command(BaseCommand):
         # Create Users - DC Heroes
         self.stdout.write('Creating DC heroes...')
         batman = User.objects.create(
-            name='Bruce Wayne',
+            username='batman',
+            first_name='Bruce',
+            last_name='Wayne',
             email='batman@dc.com',
             password='dark_knight_rises',
             team_id=str(team_dc._id)
         )
         
         superman = User.objects.create(
-            name='Clark Kent',
+            username='superman',
+            first_name='Clark',
+            last_name='Kent',
             email='superman@dc.com',
             password='kryptonian_power',
             team_id=str(team_dc._id)
         )
         
         wonder_woman = User.objects.create(
-            name='Diana Prince',
+            username='wonderwoman',
+            first_name='Diana',
+            last_name='Prince',
             email='wonderwoman@dc.com',
             password='amazonian_warrior',
             team_id=str(team_dc._id)
         )
         
         flash = User.objects.create(
-            name='Barry Allen',
+            username='flash',
+            first_name='Barry',
+            last_name='Allen',
             email='flash@dc.com',
             password='speed_force_fastest',
             team_id=str(team_dc._id)
         )
         
         aquaman = User.objects.create(
-            name='Arthur Curry',
+            username='aquaman',
+            first_name='Arthur',
+            last_name='Curry',
             email='aquaman@dc.com',
             password='atlantis_king',
             team_id=str(team_dc._id)
@@ -175,7 +195,7 @@ class Command(BaseCommand):
             
             Leaderboard.objects.create(
                 user_id=str(hero._id),
-                user_name=hero.name,
+                user_name=f"{hero.first_name} {hero.last_name}",
                 team_id=str(team._id),
                 team_name=team.name,
                 total_calories=total_calories,

@@ -73,7 +73,7 @@ function Users() {
           <tbody>
             {users.length > 0 ? (
               users.map((user) => (
-                <tr key={user.id}>
+                <tr key={user._id || user.id}>
                   <td><strong>{user.username || 'N/A'}</strong></td>
                   <td>{user.email || 'N/A'}</td>
                   <td>{user.first_name || 'N/A'}</td>

@@ -3,10 +3,23 @@ from .models import User, Team, Activity, Leaderboard, Workout
 
 
 class UserSerializer(serializers.ModelSerializer):
+    team_name = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ['_id', 'name', 'email', 'password', 'team_id', 'created_at']
+        fields = ['_id', 'username', 'email', 'first_name', 'last_name', 'password', 'team_id', 'team_name', 'date_joined']
         extra_kwargs = {'password': {'write_only': True}}
+
+    def get_team_name(self, obj):
+        if obj.team_id:
+            try:
+                from .models import Team
+                from bson import ObjectId
+                team = Team.objects.get(_id=ObjectId(obj.team_id))
+                return team.name
+            except (Team.DoesNotExist, Exception):
+                return None
+        return None
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
